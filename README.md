@@ -26,7 +26,16 @@
 <br>
 <img width="800px" alt="image" src="https://github.com/user-attachments/assets/07c41adb-6cfd-478a-8c88-eae857b0b6d3">
 <br>
- > 세대호수 + OTP 입력시 현관이 열리고 비밀번호 파기 
+ > 세대호수 + OTP 입력시 현관이 열리고 비밀번호 파기
+
+
+<br><br>
+- 공동현관 구현
+<br>
+<img width="800px" alt="image" src="[https://github.com/user-attachments/assets/07c41adb-6cfd-478a-8c88-eae857b0b6d3](https://github.com/user-attachments/assets/41d269f2-1714-4938-9924-4b8ea089eeff)">
+<br>
+ > 비밀번호 확인시 esp32 아두이노 모듈과 웹소켓을 통한 통신으로 문이 열리는 방식
+
 
 
 
