@@ -1,0 +1,41 @@
+/* Additional Custom Styles */
+body {
+    overflow: hidden;
+    font-family: Pretendard, sans-serif;
+}
+
+.container {
+    background-color: #F2F4F6;
+    border-radius: 15px;
+}
+
+.card p {
+    margin: 0;
+}
+
+.icon-section img {
+    width: 28px;
+}
+
+.icon-button {
+    width: 24px;
+    height: 24px;
+}
+
+.bg-light {
+    background-color: #E6EBF1 !important;
+}
+
+footer {
+    border-top-left-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-description-text{
+    font-size: 1px;
+    font-weight: 100;
+}

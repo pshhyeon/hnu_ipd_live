@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>빌리브</title>
+    {% load static %}
+    <script src="{% static 'resources/js/jQuery-3.7.1.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'resources/bootstrap-5.3.3/dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'resources/css/home_style.css' %}">
+    <script src="{% static 'resources/bootstrap-5.3.3/dist/js/bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+    <style>
+        /* 모달 컨테이너 스타일 */
+        .modal-dialog {
+            max-width: 350px; /* 화면 크기 줄이기 */
+            margin: 40px;
+        }
+    
+        /* 모달 콘텐츠 스타일 */
+        .modal-content {
+            border-radius: 20px; /* 둥글게 */
+            padding: 10px;
+        }
+    
+        /* 버튼 둥글게 */
+        .btn {
+            border-radius: 10px; /* 버튼 둥글게 */
+        }
+    
+        /* 추가 여백 및 스타일 */
+        .modal-body {
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+    </style>
+    
+    
+</head>
+<body class="d-flex justify-content-center align-items-center" style="background-color: #F2F4F6; height: 100vh; overflow: hidden;">
+
+    <div class="container position-relative" style="width: 400px; height: 683px; background-color: #F2F4F6; border-radius: 15px;">
+        
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center p-3">
+            <!-- <h1 class="fs-4 fw-bold mb-0">bilive</h1> -->
+            <img src="{% static 'resources/images/app_logo.png' %}" style="width: 70px;" alt="logo Icon">
+            <div class="d-flex gap-2">
+                <i class="fas fa-bell position-relative" style="font-size: large;">
+                    <span class="position-absolute top-0 start-80 translate-middle p-1 bg-primary border border-light rounded-circle" style="width: 8px; height: 8px;"></span>
+                </i>
+                <i class="fas fa-cog ms-2" style="font-size: large;"></i>
+            </div>
+        </div>
+
+        <!-- Welcome Section -->
+        <div class="row text-left my-3">
+            <div class="col mx-3 mb-5">
+                <p class="fw-bold fs-5">반가워요, 라이브님<br>오늘은 산책 어때요?</p>
+                <p class="text-secondary d-flex align-items-center justify-content-left mb-2 pm-2">
+                    <img src="{% static 'resources/images/marker_icon.png' %}" alt="Location Icon" class="me-1" style="width: 14px;"> 라이브빌
+                </p>
+            </div>
+            <div class="col">
+                <img src="{% static 'resources/images/cloud_mascot.png' %}" alt="Mascot" class="position-absolute" style="top: 60px; right: 20px; width: 170px;">
+            </div>
+        </div>
+
+        <!-- Icon Section -->
+        <div class="row text-center mt-2 gx-3">
+            <div class="col">
+                <img src="{% static 'resources/images/emergency_icon.png' %}" alt="Emergency Icon" class="img-fluid" style="width: 70px;">
+                <!-- 
+                    <div class="bg-light rounded-circle p-3 mx-auto" style="width: 60px; height: 60px;">
+                        <img src="{% static 'resources/images/emergency_icon.png' %}" alt="Emergency Icon" class="img-fluid">
+                    </div>
+                -->
+                <p class="mt-2 small">긴급신고</p>
+            </div>
+            <div class="col">
+                <img src="{% static 'resources/images/building_icon.png' %}" alt="Building Icon" class="img-fluid" style="width: 70px;">
+                <p class="mt-2 small">주택관리</p>
+            </div>
+            <div class="col">
+                <img src="{% static 'resources/images/check_list_icon.png' %}" alt="Checklist Icon" class="img-fluid" style="width: 70px;">
+                <p class="mt-2 small">안전체크</p>
+            </div>
+            <div class="col">
+                <img src="{% static 'resources/images/facilities_icon.png' %}" alt="Facilities Icon" class="img-fluid" style="width: 70px;">
+                <p class="mt-2 small">편의시설</p>
+            </div>
+        </div>
+
+        <!-- Card Section -->
+        <div class="row mt-3 px-2">
+            <div class="col-6">
+                <!-- <div class="card border-0 shadow-sm rounded-4 p-3 pt-1 pb-4 text-left h-100" onclick="javascript:location.href='/password_list_page'"> -->
+                <div class="card border-0 shadow-sm rounded-4 p-3 pt-1 pb-4 text-left h-100" data-bs-target="#initialModal" data-bs-toggle="modal">
+                    <p class="mt-3" style="font-size: 18px; font-weight: 650;">일회용 비밀번호</p>
+                    <p class="text-secondary small" style="font-size: 70%;">우리 빌라를 언제나 안전하게</p>
+                    <img src="{% static 'resources/images/lock_group_icon.png' %}" alt="Password Icon" class="mx-auto mt-4 mb-1" style="width: 100px;">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card border-0 shadow-sm rounded-4 p-3 pt-1 pb-4 text-left h-100">
+                    <p class="mt-3" style="font-size: 18px; font-weight: 650;">공지사항</p>
+                    <p class="text-secondary small" style="font-size: 70%;">빌라의 새로운 소식</p>
+                    <img src="{% static 'resources/images/notice_group_icon.png' %}" alt="Notice Icon" class="mx-auto mt-4 mb-1" style="width: 100px;">
+                </div>
+            </div>
+        </div> 
+
+        <!-- Footer -->
+        <footer class="d-flex align-items-center justify-content-center bg-dark text-white position-absolute" 
+                style="height: 70px; bottom: 0; left: 0px; right: 0px; border-top-left-radius: 25px; border-top-right-radius: 25px;">
+            <a href="#" class="text-white text-decoration-none fw-bold">+ 게시판 글쓰기</a>
+        </footer>
+
+    </div>
+
+    <!-- Initial Modal -->
+<div class="modal fade" id="initialModal" tabindex="-1" aria-labelledby="initialModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 350px;">
+        <div class="modal-content rounded-4">
+            <div class="modal-body py-4">
+                <p class="fw-bold fs-5 mb-3">일회용 비밀번호를 발급할까요?</p>
+                <p class="text-secondary mb-4" style="font-size: 90%;">즉시 비밀번호가 발급되니 유의해주세요.</p>
+                <div class="d-flex justify-content-between gap-2">
+                    <button class="btn btn-light flex-fill py-2" data-bs-dismiss="modal" style="background-color: #E6EBF1;">취소</button>
+                    <!-- Trigger to Open Second Modal -->
+                    <button class="btn btn-dark flex-fill py-2" data-bs-toggle="modal" data-bs-target="#resultModal">발급하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Result Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 350px;">
+        <div class="modal-content rounded-4">
+            <!-- 수정 후 -->
+            <div class="modal-header pb-0" style="border: none;">
+                <p class="fw-bold fs-6 mb-0">
+                    <i class="fas fa-lock" style="color: black;"></i>&nbsp;일회용 비밀번호
+                </p>
+                <!-- font-size : 20px로 설정되어있음 -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body py-4">
+                <p class="fw-bold mb-2" id="numberSection" style="font-size: 40px;">
+                    * * * *
+                </p>
+                <p class="text-secondary mb-4" style="font-size: 90%;">15분동안 유효한 비밀번호를 발급했어요<br>화면을 벗어나면 재확인이 불가능하니 유의해주세요.</p>
+                <div class="d-flex justify-content-between gap-2">
+                    <button class="btn btn-dark flex-fill py-2">공유하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const generatePasswordBtn = document.querySelector("#initialModal .btn-dark"); // 발급하기 버튼
+        const resultDisplay = document.querySelector("#numberSection"); // 난수 표시 부분
+        const shareButton = document.querySelector("#resultModal .btn-dark"); // 공유하기 버튼
+
+        let generatedPassword = null;
+
+        // 4자리 난수 생성 함수
+        function generateRandomPassword() {
+            let ranNum = Math.floor(Math.random() * 10000); // 0~9999 사이의 숫자
+            let ranNumStr = "";
+            if(ranNum < 10){
+                ranNumStr = "000" + ranNum;
+            }else if(ranNum < 100){
+                ranNumStr = "00" + ranNum;
+            }else if(ranNum < 1000){
+                ranNumStr = "0" + ranNum;
+            }else{
+                ranNumStr = "" + ranNum;
+            }
+            return ranNumStr;
+        }
+
+        // 발급하기 버튼 클릭 이벤트
+        generatePasswordBtn.addEventListener("click", function () {
+            generatedPassword = generateRandomPassword(); // 난수 생성
+            // resultDisplay.innerHTML = `${generatedPassword}`; // 난수 표시
+            resultDisplay.innerHTML = `${generatedPassword[0]}&nbsp;&nbsp;${generatedPassword[1]}&nbsp;&nbsp;${generatedPassword[2]}&nbsp;&nbsp;${generatedPassword[3]}`; // 난수 표시
+
+            // 서버로 POST 요청 보내기
+            fetch("/save_password", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCsrfToken(), // CSRF 토큰 추가 (Django 보안)
+                },
+                body: JSON.stringify({ password: generatedPassword }), // 서버로 데이터 전송
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("서버 응답:", data); // 서버 응답 확인
+                })
+                .catch((error) => {
+                    console.error("서버 요청 오류:", error); // 오류 처리
+                });
+
+        });
+        
+        // CSRF 토큰 가져오기 함수
+        function getCsrfToken() {
+            const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]");
+            return csrfToken ? csrfToken.value : "";
+        }
+
+        // 공유하기 버튼 클릭 이벤트 (필요에 따라 구현)
+        // shareButton.addEventListener("click", function () {
+        //     if (generatedPassword) {
+        //         console.log(`비밀번호 ${generatedPassword}를 공유합니다!`); // 간단한 알림 예제
+        //     }
+        // });
+        // 공유하기 버튼 클릭 이벤트
+        shareButton.addEventListener("click", function () {
+            if (generatedPassword) {
+                if (navigator.share) {
+                    // Web Share API를 사용해 공유 기능 호출
+                    navigator.share({
+                        title: "빌리브 비밀번호 공유",
+                        text: `비밀번호: ${generatedPassword}`,
+                        url: window.location.href, // 현재 페이지 URL을 함께 공유
+                    })
+                        .then(() => {
+                            console.log("공유 성공");
+                        })
+                        .catch((error) => {
+                            console.error("공유 중 오류 발생:", error);
+                        });
+                } else {
+                    // Web Share API가 지원되지 않을 경우 경고 메시지
+                    alert("이 기기에서는 공유 기능을 사용할 수 없습니다.");
+                }
+            } else {
+                alert("공유할 비밀번호가 없습니다!");
+            }
+        });
+        
+    });
+</script>
+
+
+</html>

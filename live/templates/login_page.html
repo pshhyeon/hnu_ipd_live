@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=402, initial-scale=1.0">
+    <title>Login Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'resources/bootstrap-5.3.3/dist/css/bootstrap.css' %}">
+    <script src="{% static 'resources/bootstrap-5.3.3/dist/js/bootstrap.js' %}"></script>
+    <script src="{% static 'resources/js/jQuery-3.7.1.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'resources/css/login_page_style.css' %}">
+    <link rel="stylesheet" href="{% static 'resources/css/common.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="title-text">
+            우리집을 안전하게 <br> 어쩌구~
+        </div>
+        <form action="login_act" method="post" style="position: absolute; top: 229px; left: 20px;">
+            <input type="text" name="id" class="form-control input-field" placeholder="아이디" required value="admin">
+            <input type="password" name="password" class="form-control input-field" placeholder="비밀번호(영문, 숫자 조합 8~20자리)" required value="aaaa">
+            <div class="checkbox-container">
+                <input type="checkbox" id="autoLogin" name="savePassword" style="width: 22px; height: 22px; margin-right: 8px;">
+                <label for="autoLogin">자동로그인</label>
+            </div>
+            <button type="submit" class="btn login-btn">로그인</button>
+        </form>
+        <div class="option-links" style="position: absolute; top: 470px; left: 80px;">
+            <span>아이디찾기</span> | 
+            <span>비밀번호 찾기</span> | 
+            <span>회원가입</span>
+        </div>
+        <div class="sns-icons" style="position: absolute; top: 525px; left: 111px;">
+			<div class="sns-icon" style="background-color: #03CF5D;">
+				<img src="{% static 'resources/images/naver-logo.png' %}" alt="Naver" class="logo-img">
+                <!-- naver-logo-img -->
+			</div>
+			<div class="sns-icon" style="background-color: #F9E000;">
+				<img src="{% static 'resources/images/kakao-logo.png' %}" alt="Kakao" class="logo-img">
+			</div> 
+			<div class="sns-icon" style="background-color: #222222;">
+				<img src="{% static 'resources/images/apple-logo.png' %}" alt="Apple" class="logo-img">
+			</div>
+		</div> 
+    </div>
+</body>
+
+<script>
+
+// 스크롤 밴
+// $('body').toggleClass('scrollLock');
+
+</script>
+
+</html>
+

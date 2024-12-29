@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>doorLock</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    {% load static %}
+
+    <style>
+      body {
+        margin: 0;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+      .device {
+        width: 1280px;
+        height: 800px;
+        background-color: black;
+        border-radius: 20px;
+        padding: 20px;
+        display: flex;
+      }
+      .screen {
+        width: 100%;
+        height: 300px;
+        background-color: #ffffff;
+        border: 2px solid #333;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+      }
+      .instructions {
+        font-size: 1rem;
+        color: #ccc;
+        line-height: 1.6;
+        margin-top: 20px;
+      }
+      .brand {
+        color: #fff;
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+      }
+      .keypad {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+      .key {
+        width: 120px;
+        height: 90px;
+        font-size: 40px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 90px;
+        border: none;
+        background-color: black;
+        color: white;
+      }
+      .bell-btn {
+        width: 90px;
+        height: 90px;
+        font-size: 40px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 90px;
+        border-radius: 45px;
+        background-color: black;
+        border-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="device container">
+      <div class="row flex-grow-1">
+        <div class="col-6 d-flex flex-column justify-content-between ps-5">
+          <div class="screen mt-5" id="screen">WELCOME!</div>
+          <div class="instructions pb-5 mb-5">
+            <h2 class="text-white">사용 방법</h2>
+            <h5>
+              세대 호출:
+              <i class="fa-solid fa-bell"></i> + 세대 호수 +
+              <i class="fa-solid fa-bell"></i>
+            </h5>
+            <h5>
+              비밀번호 입력: <i class="fa-solid fa-bell"></i> + 세대 호수 + # +
+              비밀번호 + <i class="fa-solid fa-bell"></i>
+            </h5>
+          </div>
+        </div>
+        <div class="col-6 d-flex flex-column align-items-center ps-5">
+          <div class="brand mt-5">
+            <!-- start img -->
+            <!-- end img -->
+            <img
+              src="{% static 'resources/images/app_logo_white.png' %}"
+              alt="app_logo_white"
+              style="width: 120px"
+            />
+          </div>
+          <div class="keypad mt-5">
+            <button class="key" onclick="enterKey('1')">1</button>
+            <button class="key" onclick="enterKey('2')">2</button>
+            <button class="key" onclick="enterKey('3')">3</button>
+            <button class="key" onclick="enterKey('4')">4</button>
+            <button class="key" onclick="enterKey('5')">5</button>
+            <button class="key" onclick="enterKey('6')">6</button>
+            <button class="key" onclick="enterKey('7')">7</button>
+            <button class="key" onclick="enterKey('8')">8</button>
+            <button class="key" onclick="enterKey('9')">9</button>
+            <button class="key" onclick="enterKey('*')">*</button>
+            <button class="key" onclick="enterKey('0')">0</button>
+            <button class="key" onclick="enterKey('#')">#</button>
+          </div>
+          <button
+            class="bell-btn mt-4"
+            id="bellButton"
+            onclick="startProcess()"
+          >
+            <i class="fas fa-bell" style="color: white"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let inputActive = false;
+      let isEnteringPassword = false;
+      let unitNumber = "";
+      let password = "";
+
+      function startProcess() {
+        if (!inputActive) {
+          inputActive = true;
+          resetInput();
+          document.getElementById("screen").innerText = "세대 호수: ____";
+        } else {
+          processInput();
+        }
+      }
+
+      function enterKey(key) {
+        if (!inputActive) return;
+
+        if (key === "#") {
+          if (!isEnteringPassword && unitNumber.length === 4) {
+            isEnteringPassword = true;
+            updateScreen();
+          }
+          return;
+        }
+
+        if (isEnteringPassword) {
+          if (password.length < 4) {
+            password += key;
+            updateScreen();
+          }
+        } else {
+          if (unitNumber.length < 4) {
+            unitNumber += key;
+            updateScreen();
+          }
+        }
+      }
+
+      function updateScreen() {
+        if (isEnteringPassword) {
+          const maskedPassword = "*".repeat(password.length).padEnd(4, "_");
+          document.getElementById("screen").innerText = `비밀번호: ${maskedPassword}`;
+        } else {
+          const formattedUnit = unitNumber.padEnd(4, "_");
+          document.getElementById("screen").innerText = `세대 호수: ${formattedUnit}`;
+        }
+      }
+
+      async function processInput() { // async await으로 비동기처리 응답 대기
+        if (unitNumber.length === 4 && password.length === 4) {
+          try {
+            const response = await fetch(
+              `https://localhost:8000/door_pass?room_no=${unitNumber}&input_password=${password}`
+            );
+            // 응답 데이터
+            const data = await response.json();
+
+            // open check
+            if (data.status === "success") {
+              sendCommand();
+              document.getElementById("screen").innerText = "문이 열렸습니다!";
+            } else {
+              document.getElementById("screen").innerText = "비밀번호가 올바르지 않습니다.";
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            document.getElementById("screen").innerText = "서버 오류. 다시 시도하세요.";
+          }
+          resetProcess();
+        }
+      }
+        
+        // 3초 후에 초기 메시지로 돌아가기
+      function resetProcess() {
+        setTimeout(() => {
+          inputActive = false;
+          resetInput()
+        }, 2000);
+      }
+
+      function resetInput() {
+        unitNumber = "";
+        password = "";
+        isEnteringPassword = false;
+        document.getElementById("screen").innerText = "WELCOME!";
+      }
+
+      // websocket setting
+      var webSocketDoorUrl = "ws://" + window.location.hostname + "/door";
+      var websocketDoor;
+
+      function initDoorWebSocket() {
+        websocketDoor = new WebSocket(webSocketDoorUrl);
+        websocketDoor.onopen = function (event) {
+          console.log("WebSocket connected");
+        };
+        websocketDoor.onclose = function (event) {
+          console.log("WebSocket disconnected");
+          setTimeout(initDoorWebSocket, 2000);
+        };
+        websocketDoor.onerror = function (event) {
+          console.error("WebSocket error:", event);
+        };
+        websocketDoor.onmessage = function (event) {
+          console.log("Message received:", event.data);
+        };
+      }
+
+      function sendCommand() {
+        if (websocketDoor && websocketDoor.readyState === WebSocket.OPEN) {
+          console.log("Sending command...");
+          websocketDoor.send("move");
+        } else {
+          console.error("WebSocket is not connected.");
+        }
+      }
+
+      window.onload = initDoorWebSocket;
+      // /websocket setting
+    </script>
+  </body>
+</html>

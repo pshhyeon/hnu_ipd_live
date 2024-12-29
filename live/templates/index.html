@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="header">
+            <div class="line01">ESP32-CAM</div>
+            <div class="line02">WiFi</div>
+            <div class="line03">Servo Control</div>
+        </div>
+        <div class="contents">
+            <button onclick="sendCommand()">Open/Close Door</button>
+        </div>
+    </div>
+    <script>
+        var webSocketDoorUrl = "ws://" + window.location.hostname + "/door";
+        var websocketDoor;
+
+        function initDoorWebSocket() {
+            websocketDoor = new WebSocket(webSocketDoorUrl);
+            websocketDoor.onopen = function(event) {
+                console.log("WebSocket connected");
+            };
+            websocketDoor.onclose = function(event) {
+                console.log("WebSocket disconnected");
+                setTimeout(initDoorWebSocket, 2000);
+            };
+        }
+
+        function sendCommand() {
+            if (websocketDoor && websocketDoor.readyState === WebSocket.OPEN) {
+                console.log("Sending command...");
+                websocketDoor.send("move");
+            } else {
+                console.error("WebSocket is not connected.");
+            }
+        }
+
+        window.onload = initDoorWebSocket;
+    </script>
+</body>
+</html>
